@@ -1,4 +1,4 @@
-# DTPicker 
+# DT Picker 
 
 A tiny jQuery UI plugin that adds date time picking functionality.
 
@@ -45,7 +45,7 @@ $('#datetime').dtpicker({
 
 ```
 
-##Dependencies
+## Dependencies
 
 [jQuery](http://jquery.com/)
 [jQuery UI](http://jqueryui.com/)
