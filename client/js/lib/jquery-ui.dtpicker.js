@@ -3,14 +3,28 @@
         options: {
             time: null,
             format: null,
-            autocomplete: null,
-            datepicker: null
+            autocompleteConfig: {},
+            datepickerConfig: {}
         },
         _create: function(){
             var $el = this.element; 
             this._events(); 
         },
         _setOption: function(key, value){
+        },
+        _getDatePickerConfig: function(){
+            var _this = this;
+            var config = _this.options.datepickerConfig;
+            config.onSelect = function(){
+                _this._pushDateTime();
+            }
+            return config;
+        },
+        _getAutocompleteConfig: function(){
+            var _this = this;
+            var config = _this.options.autocompleteConfig;
+            config.source = _this._getAutocompleteMinutes();
+            return config;
         },
         _appendPicker: function(){
             var _this = this;
@@ -24,18 +38,12 @@
                 padding:'10px',
                 background: 'white',
                 position:'absolute',
-                top: pos.top+ inputH,
+                top: pos.top + inputH,
                 left: pos.left
             });
             $('#dt_container').addClass('ui-widget'); 
-            $('#dt_datepicker_container').datepicker({
-                onSelect: function(){
-                    _this._pushDateTime();
-                }
-            });
-            $('#dt_time').autocomplete({
-                source: this._getAutocompleteMinutes()
-            });
+            $('#dt_datepicker_container').datepicker(_this._getDatePickerConfig());
+            $('#dt_time').autocomplete(_this._getAutocompleteConfig());
             $('#dt_time').outerWidth($('#dt_container').width());
             $('#dt_time').css({
                 margin: '10px 0 0 0'
@@ -44,14 +52,12 @@
         },
         _pushDateTime: function(){
             var d = $('#dt_datepicker_container').datepicker('getDate');
-            //console.log(d);
             var year = d.getFullYear();
             var month = d.getMonth()+1;
             var day = d.getDate();
             var t = $('#dt_time').val();
             var formatted = month + '/' + day + '/' + year + ' ' + t;
             this.element.val(formatted);
-            console.log(d + ' ' + t);
         },
         _getCurrentTime: function(){
             var d = new Date();
