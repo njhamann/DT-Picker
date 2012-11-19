@@ -48,5 +48,6 @@ $('#datetime').dtpicker({
 ## Dependencies
 
 [jQuery](http://jquery.com/)
+
 [jQuery UI](http://jqueryui.com/)
 
